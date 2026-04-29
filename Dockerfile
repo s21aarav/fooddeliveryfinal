@@ -1,5 +1,5 @@
 # Build stage
-FROM maven:3.8.8-openjdk-11 AS builder
+FROM maven:3.9.4-eclipse-temurin-17 AS builder
 WORKDIR /app
 COPY . .
 RUN mvn -f WebApp/pom.xml -DskipTests package
