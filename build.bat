@@ -104,27 +104,45 @@ echo.
 echo [INFO] Auto-detecting Tomcat installation...
 echo.
 
-REM Check common Tomcat locations
+set TOMCAT_PATH=
+
+REM Check common Tomcat locations (try each one separately)
 if exist "C:\tomcat\bin\startup.bat" (
     set TOMCAT_PATH=C:\tomcat
-    goto :do_deploy
-) else if exist "C:\Program Files\tomcat\bin\startup.bat" (
-    set TOMCAT_PATH=C:\Program Files\tomcat
-    goto :do_deploy
-) else if exist "C:\Program Files (x86)\tomcat\bin\startup.bat" (
-    set TOMCAT_PATH=C:\Program Files (x86)\tomcat
-    goto :do_deploy
-) else (
-    echo [ERROR] Tomcat not found in common locations
-    echo Provide path manually: build.bat deploy-path "C:\path\to\tomcat"
-    exit /b 1
+    goto :check_tomcat_found
 )
 
-:do_deploy
-echo [INFO] Found Tomcat at: %TOMCAT_PATH%
+if exist "C:\Program Files\tomcat\bin\startup.bat" (
+    set TOMCAT_PATH=C:\Program Files\tomcat
+    goto :check_tomcat_found
+)
+
+if exist "C:\Program Files (x86)\tomcat\bin\startup.bat" (
+    set TOMCAT_PATH=C:\Program Files (x86)\tomcat
+    goto :check_tomcat_found
+)
+
+if exist "%ProgramFiles%\Apache Tomcat\bin\startup.bat" (
+    set TOMCAT_PATH=%ProgramFiles%\Apache Tomcat
+    goto :check_tomcat_found
+)
+
+REM Tomcat not found
+echo [ERROR] Tomcat not found in common locations:
+echo   - C:\tomcat
+echo   - C:\Program Files\tomcat
+echo   - C:\Program Files (x86)\tomcat
+echo   - %ProgramFiles%\Apache Tomcat
+echo.
+echo Provide path manually:
+echo   build.bat deploy-path "C:\path\to\tomcat"
+exit /b 1
+
+:check_tomcat_found
+echo [INFO] Found Tomcat at: !TOMCAT_PATH!
 call :build_war
 if errorlevel 1 exit /b 1
-call :deploy_to_path "%TOMCAT_PATH%"
+call :deploy_to_path "!TOMCAT_PATH!"
 exit /b 0
 
 :deploy_to_path
@@ -132,35 +150,35 @@ setlocal enabledelayedexpansion
 set TOMCAT=%~1
 
 echo.
-echo [INFO] Deploying to Tomcat at: %TOMCAT%
+echo [INFO] Deploying to Tomcat at: !TOMCAT!
 echo.
 
-if not exist "%TOMCAT%\bin\shutdown.bat" (
-    echo [ERROR] Tomcat not found at: %TOMCAT%
+if not exist "!TOMCAT!\bin\shutdown.bat" (
+    echo [ERROR] Tomcat not found at: !TOMCAT!
     exit /b 1
 )
 
 echo [INFO] Stopping Tomcat...
-call "%TOMCAT%\bin\shutdown.bat" > nul 2>&1
+call "!TOMCAT!\bin\shutdown.bat" > nul 2>&1
 timeout /t 2 /nobreak > nul
 
 echo [INFO] Removing old deployment...
-if exist "%TOMCAT%\webapps\fooddelivery" (
-    rmdir /s /q "%TOMCAT%\webapps\fooddelivery" > nul 2>&1
+if exist "!TOMCAT!\webapps\fooddelivery" (
+    rmdir /s /q "!TOMCAT!\webapps\fooddelivery" > nul 2>&1
 )
-if exist "%TOMCAT%\webapps\fooddelivery.war" (
-    del "%TOMCAT%\webapps\fooddelivery.war" > nul 2>&1
+if exist "!TOMCAT!\webapps\fooddelivery.war" (
+    del "!TOMCAT!\webapps\fooddelivery.war" > nul 2>&1
 )
 
 echo [INFO] Copying new WAR...
-copy "%WAR_FILE%" "%TOMCAT%\webapps\" > nul
+copy "%WAR_FILE%" "!TOMCAT!\webapps\" > nul
 if errorlevel 1 (
     echo [ERROR] Failed to copy WAR file
     exit /b 1
 )
 
 echo [INFO] Starting Tomcat...
-call "%TOMCAT%\bin\startup.bat" > nul 2>&1
+call "!TOMCAT!\bin\startup.bat" > nul 2>&1
 timeout /t 3 /nobreak > nul
 
 echo.

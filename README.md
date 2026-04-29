@@ -10,13 +10,20 @@ A professional web-based application for managing food delivery orders with real
 
 ## 🪟 Windows Users?
 
-📖 **[Read WINDOWS_SETUP.md](WINDOWS_SETUP.md)** for complete Windows-specific instructions!
+📖 **[Read WINDOWS_AFTER_CLONE.md](WINDOWS_AFTER_CLONE.md)** for complete post-clone setup!
 
-Includes:
-- ✅ Prerequisites installation guide
-- ✅ build.bat script (Windows version of build.sh)
-- ✅ Step-by-step setup
+This guide covers:
+- ✅ Installing all prerequisites (Java, Maven, MySQL, Tomcat)
+- ✅ Step-by-step Windows-specific instructions
+- ✅ Database creation for Windows
+- ✅ Building and deploying
 - ✅ Windows troubleshooting
+
+---
+
+## 🖥️ macOS/Linux Users?
+
+Start with [SETUP_FOR_TEACHER.md](SETUP_FOR_TEACHER.md) for quick setup!
 
 ---
 
@@ -460,7 +467,12 @@ Database comes pre-populated with sample orders:
 
 ## 📚 Additional Documentation
 
-- **[WINDOWS_SETUP.md](WINDOWS_SETUP.md)** - Complete Windows installation & setup guide ⭐
+**For Windows Users (After Cloning):**
+- **[WINDOWS_AFTER_CLONE.md](WINDOWS_AFTER_CLONE.md)** - Complete setup guide for Windows ⭐ **START HERE IF ON WINDOWS**
+- **[WINDOWS_ERROR_FIX.md](WINDOWS_ERROR_FIX.md)** - Fix for batch script errors 🔧
+
+**For All Users:**
+- **[WINDOWS_SETUP.md](WINDOWS_SETUP.md)** - Windows installation & configuration guide
 - **[SETUP_FOR_TEACHER.md](SETUP_FOR_TEACHER.md)** - 3-step quick start guide
 - **[TEACHER_SUBMISSION.md](WebApp/TEACHER_SUBMISSION.md)** - Complete reference guide
 - **[COMPLETE_GUIDE.md](WebApp/COMPLETE_GUIDE.md)** - In-depth technical documentation
