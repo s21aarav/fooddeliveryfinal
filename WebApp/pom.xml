@@ -113,7 +113,7 @@
                 <version>1.10.8</version>
                 <configuration>
                     <container>
-                        <containerId>tomcat9x</containerId>
+                        <containerId>tomcat10x</containerId>
                         <type>embedded</type>
                     </container>
                     <configuration>

@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: fooddelivery
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: starter
+    region: oregon
+    buildCommand: ""
+    startCommand: ""
