@@ -1,5 +1,5 @@
 # Build stage
-FROM maven:3.8.8-openjdk-17 AS builder
+FROM maven:3.8.8-jdk-17 AS builder
 WORKDIR /app
 COPY . .
 RUN mvn -f WebApp/pom.xml -DskipTests package
