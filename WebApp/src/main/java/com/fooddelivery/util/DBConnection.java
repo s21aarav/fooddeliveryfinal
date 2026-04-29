@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
+    private static final String DRIVER_CLASS = "org.postgresql.Driver";
 
     // Use environment variables for database configuration
     private static final String DB_URL = getDbUrl();
@@ -21,8 +21,8 @@ public class DBConnection {
         if (dbUrl != null && !dbUrl.isEmpty()) {
             return dbUrl;
         }
-        // Default: localhost development
-        return "jdbc:mysql://localhost:3306/fooddb?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8";
+        // Default: localhost development (PostgreSQL)
+        return "jdbc:postgresql://localhost:5432/fooddb?sslmode=disable";
     }
 
     /**
@@ -48,7 +48,7 @@ public class DBConnection {
         }
         
         // Try common default passwords
-        String[] commonPasswords = {"", "root", "password", "mysql"};
+        String[] commonPasswords = {"", "postgres", "password", "root"};
         for (String pwd : commonPasswords) {
             try {
                 Class.forName(DRIVER_CLASS);
@@ -63,13 +63,13 @@ public class DBConnection {
         
         // If none work, log helpful message and return empty
         System.err.println("\n⚠️ DATABASE CONNECTION WARNING ⚠️");
-        System.err.println("Could not connect to MySQL with default passwords.");
+        System.err.println("Could not connect to the database with default passwords.");
         System.err.println("\nTo fix this:");
         System.err.println("1. Set the FOODDB_PASSWORD environment variable:");
-        System.err.println("   export FOODDB_PASSWORD='your_mysql_password'");
+        System.err.println("   export FOODDB_PASSWORD='your_database_password'");
         System.err.println("2. Then restart Tomcat");
-        System.err.println("\nCommon MySQL passwords to try: '', 'root', 'password', 'mysql'");
-        System.err.println("If you don't know your MySQL password, reset it or contact your DBA.\n");
+        System.err.println("\nCommon passwords tried: '', 'postgres', 'password', 'root'");
+        System.err.println("If you don't know your database password, reset it or contact your DBA.\n");
         
         return "";
     }
