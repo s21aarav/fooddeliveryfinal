@@ -6,6 +6,7 @@ RUN mvn -f WebApp/pom.xml -DskipTests package
 
 # Run stage
 FROM tomcat:11-jdk17
-COPY --from=builder /app/WebApp/target/fooddelivery.war /usr/local/tomcat/webapps/fooddelivery.war
+# Deploy as ROOT.war so the app is served at /
+COPY --from=builder /app/WebApp/target/fooddelivery.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
