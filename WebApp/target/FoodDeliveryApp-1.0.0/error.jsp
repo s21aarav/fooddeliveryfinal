@@ -10,7 +10,7 @@
 <body>
     <%
         // Check if user is logged in
-        HttpSession session = request.getSession(false);
+        // Note: 'session' is an implicit object in JSP, no need to declare it
         String username = null;
         
         if (session != null) {

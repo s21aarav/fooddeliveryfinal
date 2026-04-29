@@ -12,7 +12,6 @@
 <body>
     <%
         // Check if user is logged in
-        HttpSession session = request.getSession(false);
         String username = null;
         
         if (session != null) {

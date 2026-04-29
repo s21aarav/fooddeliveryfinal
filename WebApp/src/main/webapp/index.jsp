@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="javax.servlet.http.HttpSession" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,6 @@
 <body>
     <%
         // Check if user is logged in
-        HttpSession session = request.getSession(false);
         String username = null;
         
         if (session != null) {
